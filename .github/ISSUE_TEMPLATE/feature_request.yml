@@ -1,6 +1,6 @@
 name: Feature request
 title: "[FEATURE REQUEST] "
-description: Request a new feature for package-info
+description: Request a new feature for py-package-info
 labels: [🙏 Feature Request]
 body:
   - type: checkboxes
@@ -8,7 +8,7 @@ body:
     attributes:
       label: Issues
       options:
-        - label: I have checked [existing issues](https://github.com/vuki656/package-info.nvim/issues?q=is%3Aissue) and there are no existing ones with the same request.
+        - label: I have checked [existing issues](https://github.com/DanieleIsoni/py-package-info.nvim/issues?q=is%3Aissue) and there are no existing ones with the same request.
           required: true
 
   - type: textarea

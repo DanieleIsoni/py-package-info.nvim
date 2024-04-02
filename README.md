@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="https://github.com/vuki656/vuki656/blob/master/media/package-info/logo.png" width=315>
+## All the `poetry` commands I don't want to type
 
-## All the `npm`/`yarn`/`pnpm` commands I don't want to type
+> Highly inspired by [package-info.nvim](https://github.com/vuki656/package-info.nvim)
 
 </div>
 
@@ -27,16 +27,13 @@
 - Delete dependency on current line
 - Install a different version of a dependency on current line
 - Install new dependency
-- Automatic package manager detection
 - Loading animation hook (to be placed in status bar or anywhere else)
 
 <div align="center">
 
 ### Display Latest Package Version
 
-<img src="https://github.com/vuki656/vuki656/blob/master/media/package-info/display.gif" width=500>
-
-Runs `npm outdated --json` in the background and then compares the output with versions in `package.json` and displays them as virtual text.
+Runs `poetry show --top-level --latest` in the background and then compares the output with versions in `pyproject.toml` and displays them as virtual text.
 
 </div>
 
@@ -45,8 +42,8 @@ Runs `npm outdated --json` in the background and then compares the output with v
 ```lua
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>ns",
-    "<cmd>lua require('package-info').show()<cr>",
+    "<leader>ps",
+    "<cmd>lua require('py-package-info').show()<cr>",
     { silent = true, noremap = true }
 )
 ```
@@ -57,8 +54,8 @@ vim.api.nvim_set_keymap(
 ```lua
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>ns",
-    "<cmd>lua require('package-info').show({ force = true })<cr>",
+    "<leader>ps",
+    "<cmd>lua require('py-package-info').show({ force = true })<cr>",
     { silent = true, noremap = true }
 )
 ```
@@ -67,9 +64,7 @@ vim.api.nvim_set_keymap(
 
 ### Delete Dependency
 
-<img src="https://github.com/vuki656/vuki656/blob/master/media/package-info/delete.gif" width=500>
-
-Runs `yarn remove`, `npm uninstall`, or `pnpm uninstall` in the background and reloads the buffer.
+Runs `poetry remove` in the background and reloads the buffer.
 
 </div>
 
@@ -78,8 +73,8 @@ Runs `yarn remove`, `npm uninstall`, or `pnpm uninstall` in the background and r
 ```lua
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>nd",
-    "<cmd>lua require('package-info').delete()<cr>",
+    "<leader>pd",
+    "<cmd>lua require('py-package-info').delete()<cr>",
     { silent = true, noremap = true }
 )
 ```
@@ -88,9 +83,7 @@ vim.api.nvim_set_keymap(
 
 ### Install Different Version
 
-<img src="https://github.com/vuki656/vuki656/blob/master/media/package-info/change.gif" width=500>
-
-Runs `npm install dependency@version`, `yarn upgrade dependency@version`, or `pnpm update dependency` in the background and reloads the buffer.
+Runs `poetry add dependency@version` in the background and reloads the buffer.
 
 </div>
 
@@ -99,8 +92,8 @@ Runs `npm install dependency@version`, `yarn upgrade dependency@version`, or `pn
 ```lua
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>np",
-    "<cmd>lua require('package-info').change_version()<cr>",
+    "<leader>pp",
+    "<cmd>lua require('py-package-info').change_version()<cr>",
     { silent = true, noremap = true }
 )
 ```
@@ -109,9 +102,7 @@ vim.api.nvim_set_keymap(
 
 ### Install New Dependency
 
-<img src="https://github.com/vuki656/vuki656/blob/master/media/package-info/install.gif" width=500>
-
-Runs `npm install dependency`, `yarn add dependency`, or `pnpm add dependency` in the background and reloads the buffer.
+Runs `poetry add dependency` in the background and reloads the buffer.
 
 </div>
 
@@ -120,8 +111,8 @@ Runs `npm install dependency`, `yarn add dependency`, or `pnpm add dependency` i
 ```lua
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>ni",
-    "<cmd>lua require('package-info').install()<cr>",
+    "<leader>pi",
+    "<cmd>lua require('py-package-info').install()<cr>",
     { silent = true, noremap = true }
 )
 ```
@@ -130,24 +121,22 @@ vim.api.nvim_set_keymap(
 
 ### Loading Hook
 
-<img src="https://github.com/vuki656/vuki656/blob/master/media/package-info/loading.gif" width=500>
-
 Function that can be placed anywhere to display the loading status from the plugin.
 
 </div>
 
 #### Usage
 
-- It can be used anywhere in `neovim` by invoking `return require('package-info').get_status()`
+- It can be used anywhere in `neovim` by invoking `return require('py-package-info').get_status()`
 
 ```lua
-local package_info = require("package-info")
+local py_package_info = require("py-package-info")
 
 -- Galaxyline
 section.left[10] = {
-    PackageInfoStatus = {
+    PyPackageInfoStatus = {
         provider = function()
-            return package_info.get_status()
+            return py_package_info.get_status()
         end,
     },
 }
@@ -155,7 +144,7 @@ section.left[10] = {
 -- Feline
 components.right.active[5] = {
     provider = function()
-        return package_info.get_status()
+        return py_package_info.get_status()
     end,
     hl = {
         style = "bold",
@@ -177,9 +166,20 @@ components.right.active[5] = {
 
 ```lua
 use({
-    "vuki656/package-info.nvim",
+    "DanieleIsoni/py-package-info.nvim",
     requires = "MunifTanjim/nui.nvim",
 })
+```
+
+### [lazy](https://github.com/folke/lazy.nvim)
+```lua
+{
+    "DanieleIsoni/py-package-info.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    config = function()
+        require('py-package-info').setup()
+    end
+}
 ```
 
 ## ⚙️ Configuration
@@ -187,7 +187,7 @@ use({
 ### Usage
 
 ```lua
-require('package-info').setup()
+require('py-package-info').setup()
 ```
 
 ### Defaults
@@ -208,11 +208,6 @@ require('package-info').setup()
     autostart = true, -- Whether to autostart when `package.json` is opened
     hide_up_to_date = false, -- It hides up to date versions when displaying virtual text
     hide_unstable_versions = false, -- It hides unstable versions from version list e.g next-11.1.3-canary3
-    -- Can be `npm`, `yarn`, or `pnpm`. Used for `delete`, `install` etc...
-    -- The plugin will try to auto-detect the package manager based on
-    -- `yarn.lock` or `package-lock.json`. If none are found it will use the
-    -- provided one, if nothing is provided it will use `yarn`
-    package_manager = 'yarn'
 }
 ```
 
@@ -237,25 +232,25 @@ You can copy the ones below:
 
 ```lua
 -- Show dependency versions
-vim.keymap.set({ "n" }, "<LEADER>ns", require("package-info").show, { silent = true, noremap = true })
+vim.keymap.set({ "n" }, "<LEADER>ps", require("py-package-info").show, { silent = true, noremap = true })
 
 -- Hide dependency versions
-vim.keymap.set({ "n" }, "<LEADER>nc", require("package-info").hide, { silent = true, noremap = true })
+vim.keymap.set({ "n" }, "<LEADER>pc", require("py-package-info").hide, { silent = true, noremap = true })
 
 -- Toggle dependency versions
-vim.keymap.set({ "n" }, "<LEADER>nt", require("package-info").toggle, { silent = true, noremap = true })
+vim.keymap.set({ "n" }, "<LEADER>pt", require("py-package-info").toggle, { silent = true, noremap = true })
 
 -- Update dependency on the line
-vim.keymap.set({ "n" }, "<LEADER>nu", require("package-info").update, { silent = true, noremap = true })
+vim.keymap.set({ "n" }, "<LEADER>pu", require("py-package-info").update, { silent = true, noremap = true })
 
 -- Delete dependency on the line
-vim.keymap.set({ "n" }, "<LEADER>nd", require("package-info").delete, { silent = true, noremap = true })
+vim.keymap.set({ "n" }, "<LEADER>pd", require("py-package-info").delete, { silent = true, noremap = true })
 
 -- Install a new dependency
-vim.keymap.set({ "n" }, "<LEADER>ni", require("package-info").install, { silent = true, noremap = true })
+vim.keymap.set({ "n" }, "<LEADER>pi", require("py-package-info").install, { silent = true, noremap = true })
 
 -- Install a different dependency version
-vim.keymap.set({ "n" }, "<LEADER>np", require("package-info").change_version, { silent = true, noremap = true })
+vim.keymap.set({ "n" }, "<LEADER>pp", require("py-package-info").change_version, { silent = true, noremap = true })
 ```
 
 ## 🔭 Telescope
@@ -267,25 +262,25 @@ vim.keymap.set({ "n" }, "<LEADER>np", require("package-info").change_version, { 
 ```lua
 require("telescope").setup({
     extensions = {
-        package_info = {
+        py_package_info = {
             -- Optional theme (the extension doesn't set a default theme)
             theme = "ivy",
         },
     },
 })
 
-require("telescope").load_extension("package_info")
+require("telescope").load_extension("py_package_info")
 ```
 
 ### Available Commands
 
 ```
-:Telescope package_info
+:Telescope py_package_info
 ```
 
 ## 📝 Notes
 
 - Display might be slow on a project with a lot of dependencies. This is due to the
-  `npm outdated --json` command taking a long time. Nothing can be done about that
-- Idea was inspired by [akinsho](https://github.com/akinsho) and his [dependency-assist.nvim](https://github.com/akinsho/dependency-assist.nvim)
+  `poetry show --top-level --latest` command taking a long time. Nothing can be done about that
+- Idea was inspired by [akinsho](https://github.com/vuki656) and his [package-info.nvim](https://github.com/vuki656/package-info.nvim)
 - Readme template stolen from [folke](https://github.com/folke)

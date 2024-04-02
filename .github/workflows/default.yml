@@ -65,5 +65,5 @@ jobs:
             chmod +x build/neovim/v0.7.2/nvim
           }
           mkdir temp
-          build/neovim/v0.7.2/nvim --headless -c "lua require('plenary.test_harness').test_directory('.', { minimal_init='./lua/package-info/tests/minimal.vim', sequential = true })"
+          build/neovim/v0.7.2/nvim --headless -c "lua require('plenary.test_harness').test_directory('.', { minimal_init='./lua/py-package-info/tests/minimal.vim', sequential = true })"
           rm -rf temp
