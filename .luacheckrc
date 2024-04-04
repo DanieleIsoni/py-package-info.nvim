@@ -21,3 +21,4 @@ std = {
         "math",
     },
 }
+exclude_files = { "lua/py-package-info/libs/*" }

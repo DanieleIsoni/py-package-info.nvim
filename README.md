@@ -172,6 +172,7 @@ use({
 ```
 
 ### [lazy](https://github.com/folke/lazy.nvim)
+
 ```lua
 {
     "DanieleIsoni/py-package-info.nvim",
