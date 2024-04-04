@@ -26,7 +26,6 @@ M.COMMANDS = {
     delete = "PyPackageInfoDelete",
     update = "PyPackageInfoUpdate",
     install = "PyPackageInfoInstall",
-    change_version = "PyPackageInfoChangeVersion",
 }
 
 M.AUTOGROUP = "PyPackageInfoAutogroup"

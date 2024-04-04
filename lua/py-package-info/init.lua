@@ -48,12 +48,6 @@ M.install = function()
     install_action.run()
 end
 
-M.change_version = function()
-    local change_version_action = require("py-package-info.actions.change-version")
-
-    change_version_action.run()
-end
-
 M.get_status = function()
     local loading = require("py-package-info.ui.generic.loading-status")
 

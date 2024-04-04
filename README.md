@@ -81,24 +81,6 @@ vim.api.nvim_set_keymap(
 
 <div align="center">
 
-### Install Different Version
-
-Runs `poetry add dependency@version` in the background and reloads the buffer.
-
-</div>
-
-#### Keybinding
-
-```lua
-vim.api.nvim_set_keymap(
-    "n",
-    "<leader>pp",
-    "<cmd>lua require('py-package-info').change_version()<cr>",
-    { silent = true, noremap = true }
-)
-```
-
-<div align="center">
 
 ### Install New Dependency
 
@@ -249,9 +231,6 @@ vim.keymap.set({ "n" }, "<LEADER>pd", require("py-package-info").delete, { silen
 
 -- Install a new dependency
 vim.keymap.set({ "n" }, "<LEADER>pi", require("py-package-info").install, { silent = true, noremap = true })
-
--- Install a different dependency version
-vim.keymap.set({ "n" }, "<LEADER>pp", require("py-package-info").change_version, { silent = true, noremap = true })
 ```
 
 ## 🔭 Telescope

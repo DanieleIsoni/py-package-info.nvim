@@ -45,13 +45,6 @@ function M.picker()
                         },
                     },
                     {
-                        "Change package version",
-                        {
-                            command = "change_version",
-                            args = {},
-                        },
-                    },
-                    {
                         "Install package",
                         {
                             command = "install",
