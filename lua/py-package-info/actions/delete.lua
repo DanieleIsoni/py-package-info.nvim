@@ -15,16 +15,8 @@ local M = {}
 -- @param dependency_name: string - dependency for which to get the command
 -- @return string
 M.__get_command = function(dependency_name)
-    if config.options.package_manager == constants.PACKAGE_MANAGERS.yarn then
-        return "yarn remove " .. dependency_name
-    end
-
-    if config.options.package_manager == constants.PACKAGE_MANAGERS.npm then
-        return "npm uninstall " .. dependency_name
-    end
-
-    if config.options.package_manager == constants.PACKAGE_MANAGERS.pnpm then
-        return "pnpm remove " .. dependency_name
+    if config.options.package_manager == constants.PACKAGE_MANAGERS.poetry then
+        return "poetry remove " .. dependency_name
     end
 end
 
@@ -32,7 +24,7 @@ end
 -- @return nil
 M.run = function()
     if not state.is_loaded then
-        logger.warn("Not in valid package.json file")
+        logger.warn("Not in valid pyproject.toml file")
 
         return
     end
@@ -43,13 +35,13 @@ M.run = function()
         return
     end
 
-    local id = loading.new("|  Deleting " .. dependency_name .. " dependency")
+    local id = loading.new("|   Deleting " .. dependency_name .. " dependency")
 
     prompt.new({
         title = " Delete [" .. dependency_name .. "] Dependency ",
         on_submit = function()
             job({
-                json = false,
+                toml = false,
                 command = M.__get_command(dependency_name),
                 on_start = function()
                     loading.start(id)

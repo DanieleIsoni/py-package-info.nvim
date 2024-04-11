@@ -15,7 +15,7 @@ describe("Actions show", function()
     end)
 
     it("should not throw", function()
-        file.create_package_json({ go = true })
+        file.create_pyproject_toml({ go = true })
 
         config.setup()
         core.load_plugin()

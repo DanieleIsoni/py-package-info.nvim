@@ -33,7 +33,7 @@
 
 ### Display Latest Package Version
 
-Runs `poetry show --top-level --latest` in the background and then compares the output with versions in `pyproject.toml` and displays them as virtual text.
+Runs `poetry show --top-level --outdated` in the background and then compares the output with versions in `pyproject.toml` and displays them as virtual text.
 
 </div>
 
@@ -139,7 +139,7 @@ components.right.active[5] = {
 ## ⚡️ Requirements
 
 - Neovim >= 0.6.0
-- Npm
+- Poetry
 - [Patched font](https://github.com/ryanoasis/nerd-fonts/tree/gh-pages) if you want icons
 
 ## 📦 Installation
@@ -188,7 +188,7 @@ require('py-package-info').setup()
             outdated = "|  ", -- Icon for outdated dependencies
         },
     },
-    autostart = true, -- Whether to autostart when `package.json` is opened
+    autostart = true, -- Whether to autostart when `pyproject.toml` is opened
     hide_up_to_date = false, -- It hides up to date versions when displaying virtual text
     hide_unstable_versions = false, -- It hides unstable versions from version list e.g next-11.1.3-canary3
 }
@@ -261,6 +261,6 @@ require("telescope").load_extension("py_package_info")
 ## 📝 Notes
 
 - Display might be slow on a project with a lot of dependencies. This is due to the
-  `poetry show --top-level --latest` command taking a long time. Nothing can be done about that
+  `poetry show --top-level --outdated` command taking a long time. Nothing can be done about that
 - Idea was inspired by [akinsho](https://github.com/vuki656) and his [package-info.nvim](https://github.com/vuki656/package-info.nvim)
 - Readme template stolen from [folke](https://github.com/folke)

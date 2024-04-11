@@ -17,30 +17,14 @@ local M = {}
 -- @return string
 M.__get_command = function(type, dependency_name)
     if type == constants.DEPENDENCY_TYPE.development then
-        if config.options.package_manager == constants.PACKAGE_MANAGERS.yarn then
-            return "yarn add -D " .. dependency_name
-        end
-
-        if config.options.package_manager == constants.PACKAGE_MANAGERS.npm then
-            return "npm install --save-dev " .. dependency_name
-        end
-
-        if config.options.package_manager == constants.PACKAGE_MANAGERS.pnpm then
-            return "pnpm add -D " .. dependency_name
+        if config.options.package_manager == constants.PACKAGE_MANAGERS.poetry then
+            return "poetry add --group dev " .. dependency_name
         end
     end
 
     if type == constants.DEPENDENCY_TYPE.production then
-        if config.options.package_manager == constants.PACKAGE_MANAGERS.yarn then
-            return "yarn add " .. dependency_name
-        end
-
-        if config.options.package_manager == constants.PACKAGE_MANAGERS.npm then
-            return "npm install " .. dependency_name
-        end
-
-        if config.options.package_manager == constants.PACKAGE_MANAGERS.pnpm then
-            return "pnpm add " .. dependency_name
+        if config.options.package_manager == constants.PACKAGE_MANAGERS.poetry then
+            return "poetry add " .. dependency_name
         end
     end
 end
@@ -51,7 +35,7 @@ end
 M.__display_dependency_name_input = function(selected_dependency_type)
     dependency_name_input.new({
         on_submit = function(dependency_name)
-            local id = loading.new("|  Installing " .. dependency_name .. " dependency")
+            local id = loading.new("|   Installing " .. dependency_name .. " dependency")
 
             job({
                 command = M.__get_command(selected_dependency_type, dependency_name),
@@ -77,7 +61,7 @@ end
 -- @return nil
 M.run = function()
     if not state.is_in_project then
-        logger.info("Not in a JS/TS project")
+        logger.info("Not in a python project")
 
         return
     end

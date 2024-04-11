@@ -1,22 +1,20 @@
 local M = {
-    --- If true, the plugin has detected JS/TS project
+    --- If true, the plugin has detected python project
     is_in_project = false,
-    --- If true the current buffer is package json, with content and correct format
+    --- If true the current buffer is pyproject.toml, with content and correct format
     is_loaded = false,
-    --- If true the virtual text versions are displayed in package.json
+    --- If true the virtual text versions are displayed in pyproject.toml
     is_virtual_text_displayed = false,
-    --- If true the project is using yarn 2<
-    has_old_yarn = false,
 }
 
 M.dependencies = {
-    -- Outdated dependencies from `npm outdated --json` as a list of
+    -- Outdated dependencies from `poetry show -l -o` as a list of
     -- [name]: {
     --     current: string - current dependency version
     --     latest: string - latest dependency version
     -- }
     outdated = {},
-    -- Installed dependencies from package.json as a list of
+    -- Installed dependencies from pyproject.toml as a list of
     -- ["dependency_name"] = {
     --     current: string - current dependency version
     -- }

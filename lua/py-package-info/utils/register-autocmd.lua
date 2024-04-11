@@ -4,5 +4,5 @@ local constants = require("py-package-info.utils.constants")
 -- @param event: string - event that will trigger the autocommand
 -- @param command: string - command to fire when the event is triggered
 return function(event, command)
-    vim.cmd("autocmd " .. constants.AUTOGROUP .. " " .. event .. " package.json " .. command)
+    vim.cmd("autocmd " .. constants.AUTOGROUP .. " " .. event .. " pyproject.toml " .. command)
 end

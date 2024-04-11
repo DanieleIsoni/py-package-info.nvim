@@ -14,64 +14,63 @@ M.generate_file = function(suffix)
     return "./temp/" .. id .. "/" .. (suffix or "")
 end
 
---- Creata generic package.json file
+--- Creata generic pyproject.toml file
 -- @param props: table? - possible options
 -- {
---     go: boolean? - if true, goes to package.json instantly after creation
+--     go: boolean? - if true, goes to pyproject.toml instantly after creation
 --     content: string? - content to put in the file
 -- }
 -- @return table
 -- {
 --     path: string - path to the created file
 -- }
-M.create_package_json = function(props)
-    local path = M.generate_file("package.json")
+M.create_pyproject_toml = function(props)
+    local path = M.generate_file("pyproject.toml")
     local file = io.open(path, "w")
 
     if props.content then
         file:write(props.content)
     else
         file:write([[
-            {
-                "name": "repo-name",
-                "scripts": {
-                    "lint": "eslint ./*"
-                },
-                "dependencies": {
-                    "react": "16.0.0",
-                    "next": "12.0.3"
-                },
-                "devDependencies": {
-                    "eslint": "^8.0.0"
-                }
-            }
+            [tool.poetry]
+            name = "a-name"
+            version = "0.1.0"
+            readme = "README.md"
+
+            [tool.poetry.dependencies]
+            python = "~3.12"
+            Django = "~4.2.8"
+            gunicorn = "^20.1.0"
+
+            [tool.poetry.group.dev.dependencies]
+            mypy = "1.8.0"
         ]])
     end
 
     local dependencies = {
-        react = {
-            name = "react",
+        django = {
+            name = "Django",
             version = {
-                current = "16.0.0",
-                latest = "18.0.0",
-            },
-            position = 7,
-        },
-        next = {
-            name = "next",
-            version = {
-                current = "12.0.3",
-                latest = "12.0.3",
+                current = "~4.2.8",
+                latest = "5.0.0",
             },
             position = 8,
         },
-        eslint = {
-            name = "eslint",
+        gunicorn = {
+            name = "gunicorn",
             version = {
-                current = "^8.0.0",
-                latest = "9.0.0",
+                current = "^20.1.0",
+                latest = "20.2.3",
             },
-            position = 11,
+            position = 9,
+        },
+        mypy = {
+            name = "mypy",
+            version = {
+                current = "1.8.0",
+                latest = "1.10.0",
+            },
+            position = 12,
         },
     }
 

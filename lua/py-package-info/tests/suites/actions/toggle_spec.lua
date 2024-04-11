@@ -18,7 +18,7 @@ describe("Actions toggle", function()
     end)
 
     it("should not throw", function()
-        file.create_package_json({ go = true })
+        file.create_pyproject_toml({ go = true })
 
         spy.on(virtual_text, "clear")
         spy.on(virtual_text, "display")

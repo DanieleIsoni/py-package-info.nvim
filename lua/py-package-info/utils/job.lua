@@ -1,4 +1,4 @@
-local json_parser = require("py-package-info.libs.json_parser")
+local toml = require("py-package-info.libs.toml")
 local logger = require("py-package-info.utils.logger")
 local safe_call = require("py-package-info.utils.safe-call")
 
@@ -6,9 +6,9 @@ local safe_call = require("py-package-info.utils.safe-call")
 -- @param props.command - string command to run
 -- @param props.on_success - function to invoke with the results
 -- @param props.on_error - function to invoke if the command fails
--- @param props.ignore_error?: boolean - ignore non-zero exit codes (npm outdated throws 1 when getting the list)
+-- @param props.ignore_error?: boolean - ignore non-zero exit codes
 -- @param props.on_start?: function - callback to invoke before the job starts
--- @param props.json?: boolean - if output should be parsed as json
+-- @param props.toml?: boolean - if output should be parsed as toml
 -- @return nil
 return function(props)
     local value = ""
@@ -24,15 +24,15 @@ return function(props)
     end
 
     -- Get the current cwd and use it as the value for
-    -- cwd in case no package.json is open right now
+    -- cwd in case no pyproject.toml is open right now
     local cwd = vim.fn.getcwd()
 
     -- Get the path of the opened file if there is one
     local file_path = vim.fn.expand("%:p")
 
-    -- If the file is a package.json then use the directory
+    -- If the file is a pyproject.toml then use the directory
     -- of the file as value for cwd
-    if string.sub(file_path, -12) == "package.json" then
+    if string.sub(file_path, -12) == "pyproject.toml" then
         cwd = string.sub(file_path, 1, -13)
     end
 
@@ -45,11 +45,11 @@ return function(props)
                 return
             end
 
-            if props.json then
-                local ok, json_value = pcall(json_parser.decode, value)
+            if props.toml then
+                local ok, toml_value = pcall(toml.parse, value)
 
                 if ok then
-                    props.on_success(json_value)
+                    props.on_success(toml_value)
 
                     return
                 end

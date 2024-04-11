@@ -17,8 +17,8 @@ describe("Virtual_text display", function()
         reset.all()
     end)
 
-    it("should be called for each dependency in package.json", function()
-        local package_json = file.create_package_json({ go = true })
+    it("should be called for each dependency in pyproject.toml", function()
+        local pyproject_toml = file.create_pyproject_toml({ go = true })
 
         config.setup()
         core.load_plugin()
@@ -27,9 +27,9 @@ describe("Virtual_text display", function()
 
         virtual_text.display()
 
-        file.delete(package_json.path)
+        file.delete(pyproject_toml.path)
 
-        assert.spy(virtual_text.__display_on_line).was_called(package_json.total_count)
+        assert.spy(virtual_text.__display_on_line).was_called(pyproject_toml.total_count)
         assert.is_true(state.is_virtual_text_displayed)
     end)
 end)

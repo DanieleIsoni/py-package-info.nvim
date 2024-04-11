@@ -16,20 +16,20 @@ describe("Parser parse_buffer", function()
     end)
 
     it("should map and set all dependencies to state", function()
-        local package_json = file.create_package_json({ go = true })
+        local pyproject_toml = file.create_pyproject_toml({ go = true })
 
         core.load_plugin()
         parser.parse_buffer()
 
         local expected_dependency_list = {}
 
-        for _, dependency in pairs(package_json.dependencies) do
+        for _, dependency in pairs(pyproject_toml.dependencies) do
             expected_dependency_list[dependency.name] = {
                 current = clean_version(dependency.version.current),
             }
         end
 
-        file.delete(package_json.path)
+        file.delete(pyproject_toml.path)
 
         assert.are.same(expected_dependency_list, state.dependencies.installed)
     end)

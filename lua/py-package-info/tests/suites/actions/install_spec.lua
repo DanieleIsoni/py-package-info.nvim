@@ -15,7 +15,7 @@ describe("Actions install", function()
     end)
 
     it("should not throw on production dependency install", function()
-        file.create_package_json({ go = true })
+        file.create_pyproject_toml({ go = true })
 
         config.setup()
         core.load_plugin()
@@ -30,7 +30,7 @@ describe("Actions install", function()
     end)
 
     it("should not throw on development dependency install", function()
-        file.create_package_json({ go = true })
+        file.create_pyproject_toml({ go = true })
 
         config.setup()
         core.load_plugin()

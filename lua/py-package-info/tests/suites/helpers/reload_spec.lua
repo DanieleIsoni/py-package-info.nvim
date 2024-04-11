@@ -19,23 +19,23 @@ describe("Helpers reload", function()
         reset.all()
     end)
 
-    it("should reload the buffer if it's package.json", function()
-        local package_json = file.create_package_json({ go = true })
+    it("should reload the buffer if it's pyproject.toml", function()
+        local pyproject_toml = file.create_pyproject_toml({ go = true })
 
         spy.on(parser, "parse_buffer")
 
         core.load_plugin()
         reload()
 
-        file.delete(package_json.path)
+        file.delete(pyproject_toml.path)
 
         assert.spy(parser.parse_buffer).was_called(2)
     end)
 
-    it("should reload the buffer and re-render virtual text if it's displayed and in package.json", function()
+    it("should reload the buffer and re-render virtual text if it's displayed and in pyproject.toml", function()
         state.is_virtual_text_displayed = true
 
-        local package_json = file.create_package_json({ go = true })
+        local pyproject_toml = file.create_pyproject_toml({ go = true })
 
         spy.on(parser, "parse_buffer")
         spy.on(virtual_text, "display")
@@ -45,7 +45,7 @@ describe("Helpers reload", function()
         core.load_plugin()
         reload()
 
-        file.delete(package_json.path)
+        file.delete(pyproject_toml.path)
 
         assert.spy(virtual_text.display).was_called(1)
         assert.spy(virtual_text.clear).was_called(1)

@@ -2,7 +2,7 @@ local parser = require("py-package-info.parser")
 local virtual_text = require("py-package-info.virtual_text")
 local state = require("py-package-info.state")
 
---- Reloads the buffer if it's package.json
+--- Reloads the buffer if it's pyproject.toml
 -- @return nil
 local reload_buffer = function()
     local current_buffer_number = vim.fn.bufnr()

@@ -18,7 +18,7 @@ describe("Actions hide", function()
     end)
 
     it("should call clear() if plugin is loaded", function()
-        file.create_package_json({ go = true })
+        file.create_pyproject_toml({ go = true })
 
         spy.on(virtual_text, "clear")
 
@@ -31,7 +31,7 @@ describe("Actions hide", function()
     end)
 
     it("should do nothing if plugin isn't loaded", function()
-        file.create_package_json({ go = true })
+        file.create_pyproject_toml({ go = true })
 
         spy.on(virtual_text, "clear")
 

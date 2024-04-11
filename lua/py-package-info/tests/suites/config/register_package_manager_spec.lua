@@ -13,33 +13,13 @@ describe("Config register_package_manager", function()
         reset.all()
     end)
 
-    it("should detect npm package manager", function()
-        local created_file = file.create({ name = "package-lock.json" })
+    it("should detect poetry package manager", function()
+        local created_file = file.create({ name = "pyproject.toml" })
 
         config.__register_package_manager()
 
         file.delete(created_file.path)
 
-        assert.are.equals(constants.PACKAGE_MANAGERS.npm, config.options.package_manager)
-    end)
-
-    it("should detect yarn package manager", function()
-        local created_file = file.create({ name = "yarn.lock" })
-
-        config.__register_package_manager()
-
-        file.delete(created_file.path)
-
-        assert.are.equals(constants.PACKAGE_MANAGERS.yarn, config.options.package_manager)
-    end)
-
-    it("should detect pnpm package manager", function()
-        local created_file = file.create({ name = "pnpm-lock.yaml" })
-
-        config.__register_package_manager()
-
-        file.delete(created_file.path)
-
-        assert.are.equals(constants.PACKAGE_MANAGERS.pnpm, config.options.package_manager)
+        assert.are.equals(constants.PACKAGE_MANAGERS.poetry, config.options.package_manager)
     end)
 end)

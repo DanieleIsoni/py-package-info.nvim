@@ -15,20 +15,8 @@ local M = {}
 -- @param dependency_name: string - dependency for which to get the command
 -- @return string
 M.__get_command = function(dependency_name)
-    if config.options.package_manager == constants.PACKAGE_MANAGERS.yarn then
-        if state.has_old_yarn then
-            return "yarn upgrade " .. dependency_name .. " --latest"
-        end
-
-        return "yarn up " .. dependency_name
-    end
-
-    if config.options.package_manager == constants.PACKAGE_MANAGERS.npm then
-        return "npm install " .. dependency_name .. "@latest"
-    end
-
-    if config.options.package_manager == constants.PACKAGE_MANAGERS.pnpm then
-        return "pnpm update --latest " .. dependency_name
+    if config.options.package_manager == constants.PACKAGE_MANAGERS.poetry then
+        return "poetry add " .. dependency_name .. "@latest"
     end
 end
 
@@ -36,7 +24,7 @@ end
 -- @return nil
 M.run = function()
     if not state.is_loaded then
-        logger.warn("Not in valid package.json file")
+        logger.warn("Not in valid pyproject.toml file")
 
         return
     end
@@ -47,13 +35,13 @@ M.run = function()
         return
     end
 
-    local id = loading.new("| ﯁ Updating " .. dependency_name .. " dependency")
+    local id = loading.new("|  ﯁ Updating " .. dependency_name .. " dependency")
 
     prompt.new({
         title = " Update [" .. dependency_name .. "] Dependency ",
         on_submit = function()
             job({
-                json = false,
+                toml = false,
                 command = M.__get_command(dependency_name),
                 on_start = function()
                     loading.start(id)

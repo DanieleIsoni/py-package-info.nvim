@@ -26,32 +26,32 @@ describe("Helpers get_dependency_name_from_line", function()
     end)
 
     it("should return nil if dependency not on the list", function()
-        local package_json = file.create_package_json({ go = true })
+        local pyproject_toml = file.create_pyproject_toml({ go = true })
 
         core.load_plugin()
 
         local dependency_name = get_dependency_name_from_line('"dep_that_does_not_exist": "1.0.0"')
 
-        file.delete(package_json.path)
+        file.delete(pyproject_toml.path)
 
         assert.is_nil(dependency_name)
     end)
 
-    it("should return dependency name if line is valid and dependency is in package.json", function()
-        local package_json = file.create_package_json({ go = true })
+    it("should return dependency name if line is valid and dependency is in pyproject.toml", function()
+        local pyproject_toml = file.create_pyproject_toml({ go = true })
 
         core.load_plugin()
 
         local dependency_name = get_dependency_name_from_line(
             string.format(
                 '"%s": "%s"',
-                package_json.dependencies.react.name,
-                package_json.dependencies.react.version.current
+                pyproject_toml.dependencies.django.name,
+                pyproject_toml.dependencies.django.version.current
             )
         )
 
-        file.delete(package_json.path)
+        file.delete(pyproject_toml.path)
 
-        assert.are.equals(package_json.dependencies.react.name, dependency_name)
+        assert.are.equals(pyproject_toml.dependencies.django.name, dependency_name)
     end)
 end)

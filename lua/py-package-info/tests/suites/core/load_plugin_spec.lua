@@ -17,21 +17,21 @@ describe("Core load_plugin", function()
         reset.all()
     end)
 
-    it("should return nil if not in package.json", function()
+    it("should return nil if not in pyproject.toml", function()
         local is_loaded = to_boolean(core.load_plugin())
 
         assert.is_false(is_loaded)
     end)
 
-    it("should load the plugin if in package.json", function()
-        local package_json = file.create_package_json({ go = true })
+    it("should load the plugin if in pyproject.toml", function()
+        local pyproject_toml = file.create_pyproject_toml({ go = true })
 
         spy.on(parser, "parse_buffer")
         spy.on(state.buffer, "save")
 
         core.load_plugin()
 
-        file.delete(package_json.path)
+        file.delete(pyproject_toml.path)
 
         assert.spy(state.buffer.save).was_called(1)
         assert.spy(parser.parse_buffer).was_called(1)

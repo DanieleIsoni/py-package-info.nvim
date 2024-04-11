@@ -15,12 +15,12 @@ describe("Actions update", function()
     end)
 
     it("should not throw", function()
-        local package_json = file.create_package_json({ go = true })
+        local pyproject_toml = file.create_pyproject_toml({ go = true })
 
         config.setup()
         core.load_plugin()
 
-        vim.cmd(tostring(package_json.dependencies.eslint.position))
+        vim.cmd(tostring(pyproject_toml.dependencies.mypy.position))
 
         assert.has_no.errors(function()
             update_action.run()

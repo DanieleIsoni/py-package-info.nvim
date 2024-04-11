@@ -2,8 +2,6 @@ local constants = require("py-package-info.utils.constants")
 local register_highlight_group = require("py-package-info.utils.register-highlight-group")
 local register_autocmd = require("py-package-info.utils.register-autocmd")
 local state = require("py-package-info.state")
-local job = require("py-package-info.utils.job")
-local logger = require("py-package-info.utils.logger")
 
 local M = {
     __DEFAULT_OPTIONS = {
@@ -19,7 +17,7 @@ local M = {
             },
         },
         autostart = true,
-        package_manager = constants.PACKAGE_MANAGERS.npm,
+        package_manager = constants.PACKAGE_MANAGERS.poetry,
         hide_up_to_date = false,
         hide_unstable_versions = false,
     },
@@ -37,48 +35,12 @@ end
 -- Check which lock file exists and set package manager accordingly
 -- @return nil
 M.__register_package_manager = function()
-    local yarn_lock = io.open("yarn.lock", "r")
+    local poetry_lock = io.open("poetry.lock", "r")
 
-    if yarn_lock ~= nil then
-        M.options.package_manager = constants.PACKAGE_MANAGERS.yarn
+    if poetry_lock ~= nil then
+        M.options.package_manager = constants.PACKAGE_MANAGERS.poetry
 
-        job({
-            command = "yarn -v",
-            on_success = function(full_version)
-                local major_version = full_version:sub(1, 1)
-
-                if major_version == "1" then
-                    state.has_old_yarn = true
-                end
-            end,
-            on_error = function()
-                logger.error("Error detecting yarn version. Falling back to yarn <2")
-            end,
-        })
-
-        io.close(yarn_lock)
-        state.is_in_project = true
-
-        return
-    end
-
-    local package_lock = io.open("package-lock.json", "r")
-
-    if package_lock ~= nil then
-        M.options.package_manager = constants.PACKAGE_MANAGERS.npm
-
-        io.close(package_lock)
-        state.is_in_project = true
-
-        return
-    end
-
-    local pnpm_lock = io.open("pnpm-lock.yaml", "r")
-
-    if pnpm_lock ~= nil then
-        M.options.package_manager = constants.PACKAGE_MANAGERS.pnpm
-
-        io.close(pnpm_lock)
+        io.close(poetry_lock)
         state.is_in_project = true
 
         return
@@ -158,7 +120,6 @@ M.__register_commands = function()
     vim.cmd("command! " .. constants.COMMANDS.delete .. " lua require('py-package-info').delete()")
     vim.cmd("command! " .. constants.COMMANDS.update .. " lua require('py-package-info').update()")
     vim.cmd("command! " .. constants.COMMANDS.install .. " lua require('py-package-info').install()")
-    vim.cmd("command! " .. constants.COMMANDS.change_version .. " lua require('py-package-info').change_version()")
 end
 
 --- Take all user options and setup the config

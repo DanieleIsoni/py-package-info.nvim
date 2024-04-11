@@ -8,7 +8,7 @@ local M = {}
 -- @return nil
 M.run = function()
     if not state.is_loaded then
-        logger.warn("Not in valid package.json file")
+        logger.warn("Not in valid pyproject.toml file")
 
         return
     end

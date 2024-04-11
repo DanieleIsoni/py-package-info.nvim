@@ -17,21 +17,21 @@ describe("Helpers get_dependency_name_from_current_line", function()
     end)
 
     it("should get the name correctly", function()
-        local package_json = file.create_package_json({ go = true })
+        local pyproject_toml = file.create_pyproject_toml({ go = true })
 
         core.load_plugin()
 
-        vim.cmd(tostring(package_json.dependencies.eslint.position))
+        vim.cmd(tostring(pyproject_toml.dependencies.mypy.position))
 
         local dependency_name = get_dependency_name_from_current_line()
 
-        file.delete(package_json.path)
+        file.delete(pyproject_toml.path)
 
-        assert.are.equals(package_json.dependencies.eslint.name, dependency_name)
+        assert.are.equals(pyproject_toml.dependencies.mypy.name, dependency_name)
     end)
 
     it("should return nil if no valid dependency is on the current line", function()
-        local package_json = file.create_package_json({ go = true })
+        local pyproject_toml = file.create_pyproject_toml({ go = true })
 
         core.load_plugin()
 
@@ -45,6 +45,6 @@ describe("Helpers get_dependency_name_from_current_line", function()
         assert.spy(logger.warn).was_called(1)
         assert.spy(logger.warn).was_called_with("No valid dependency on current line")
 
-        file.delete(package_json.path)
+        file.delete(pyproject_toml.path)
     end)
 end)

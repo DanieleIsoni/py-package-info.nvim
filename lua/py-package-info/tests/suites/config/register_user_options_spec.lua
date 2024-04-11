@@ -26,7 +26,6 @@ describe("Config register_user_options", function()
                 },
             },
             autostart = false,
-            package_manager = constants.PACKAGE_MANAGERS.yarn,
             hide_up_to_date = true,
             hide_unstable_versions = true,
         }
