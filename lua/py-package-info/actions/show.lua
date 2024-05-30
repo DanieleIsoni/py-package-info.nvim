@@ -30,7 +30,7 @@ M.run = function(options)
 
     job({
         toml = false,
-        command = "poetry show -o -T",
+        command = "poetry show -o -T | awk '{print $1, $2, $3}' ORS=' '",
         on_start = function()
             loading.start(id)
         end,

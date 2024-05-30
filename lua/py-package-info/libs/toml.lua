@@ -352,10 +352,14 @@ local function parser_is_new_line(self, steps)
 end
 
 local function Parser(buffer)
+    local bufferByte = {}
+    for i = 1, #buffer do
+        bufferByte[i] = stringbyte(buffer, i)
+    end
     -- look mom, oop!
     local parser = {
         cursor = 1,
-        buffer = { stringbyte(buffer, 1, #buffer) },
+        buffer = bufferByte,
 
         line = 1,
         pos = 1,
