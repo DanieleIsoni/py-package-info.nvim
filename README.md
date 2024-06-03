@@ -133,6 +133,13 @@ components.right.active[5] = {
     left_sep = "  ",
     right_sep = " ",
 }
+
+-- LuaLine
+sections.lualine_x[3] = {}
+    function()
+        return py_package_info.get_status()
+    end,
+}
 ```
 
 ## ⚡️ Requirements
