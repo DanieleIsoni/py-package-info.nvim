@@ -32,18 +32,18 @@ M.create_pyproject_toml = function(props)
         file:write(props.content)
     else
         file:write([[
-            [tool.poetry]
-            name = "a-name"
-            version = "0.1.0"
-            readme = "README.md"
+[tool.poetry]
+name = "a-name"
+version = "0.1.0"
+readme = "README.md"
 
-            [tool.poetry.dependencies]
-            python = "~3.12"
-            Django = "~4.2.8"
-            gunicorn = "^20.1.0"
+[tool.poetry.dependencies]
+python = "~3.12"
+Django = "~4.2.8"
+gunicorn = "^20.1.0"
 
-            [tool.poetry.group.dev.dependencies]
-            mypy = "1.8.0"
+[tool.poetry.group.dev.dependencies]
+mypy = "1.8.0"
         ]])
     end
 

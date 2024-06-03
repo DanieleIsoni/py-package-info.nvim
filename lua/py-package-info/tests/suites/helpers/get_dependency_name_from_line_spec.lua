@@ -44,7 +44,7 @@ describe("Helpers get_dependency_name_from_line", function()
 
         local dependency_name = get_dependency_name_from_line(
             string.format(
-                '"%s": "%s"',
+                '%s = "%s"',
                 pyproject_toml.dependencies.django.name,
                 pyproject_toml.dependencies.django.version.current
             )
