@@ -81,7 +81,6 @@ vim.api.nvim_set_keymap(
 
 <div align="center">
 
-
 ### Install New Dependency
 
 Runs `poetry add dependency` in the background and reloads the buffer.

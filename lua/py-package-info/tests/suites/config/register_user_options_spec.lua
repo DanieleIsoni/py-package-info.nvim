@@ -1,4 +1,3 @@
-local constants = require("py-package-info.utils.constants")
 local config = require("py-package-info.config")
 
 local reset = require("py-package-info.tests.utils.reset")
