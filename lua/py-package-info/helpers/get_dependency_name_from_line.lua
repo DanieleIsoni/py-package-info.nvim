@@ -52,7 +52,7 @@ return function(line)
 
     for k, v in pairs(parsed_line) do
         length = length + 1
-        parsed_line_key = k
+        parsed_line_key = string.lower(k)
         parsed_line_value = v
     end
 

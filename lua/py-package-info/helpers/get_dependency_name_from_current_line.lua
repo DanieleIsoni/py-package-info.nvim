@@ -8,6 +8,9 @@ return function()
     local current_line = vim.fn.getline(".")
 
     local dependency_name = get_dependency_name_from_line(current_line)
+    if dependency_name ~= nil then
+        dependency_name = string.lower(dependency_name)
+    end
 
     if state.dependencies.installed[dependency_name] then
         return dependency_name

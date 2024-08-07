@@ -48,7 +48,7 @@ M.parse_buffer = function()
             version = clean_version(value["version"])
         end
         if name ~= "python" and version then
-            installed_dependencies[name] = {
+            installed_dependencies[string.lower(name)] = {
                 current = version,
             }
         end
