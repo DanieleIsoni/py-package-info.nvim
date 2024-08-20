@@ -17,6 +17,7 @@ M.dependencies = {
     -- Installed dependencies from pyproject.toml as a list of
     -- ["dependency_name"] = {
     --     current: string - current dependency version
+    --     group: string - dpendency group (dev|nil)
     -- }
     installed = {},
 }

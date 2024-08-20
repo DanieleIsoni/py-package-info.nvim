@@ -13,10 +13,17 @@ local M = {}
 
 --- Returns the update command based on package manager
 -- @param dependency_name: string - dependency for which to get the command
+-- @param group: string - dependency group (dev|nil)
 -- @return string
-M.__get_command = function(dependency_name)
+M.__get_command = function(dependency_name, group)
     if config.options.package_manager == constants.PACKAGE_MANAGERS.poetry then
-        return "poetry add " .. dependency_name .. "@latest"
+        local command = "poetry add " .. dependency_name .. "@latest"
+
+        if group ~= nil then
+            command = command .. " --group " .. group
+        end
+
+        return command
     end
 end
 
@@ -35,6 +42,11 @@ M.run = function()
         return
     end
 
+    local group
+    if state.dependencies.installed[dependency_name] ~= nil then
+        group = state.dependencies.installed[dependency_name].group
+    end
+
     local id = loading.new("|  ﯁ Updating " .. dependency_name .. " dependency")
 
     prompt.new({
@@ -42,7 +54,7 @@ M.run = function()
         on_submit = function()
             job({
                 toml = false,
-                command = M.__get_command(dependency_name),
+                command = M.__get_command(dependency_name, group),
                 on_start = function()
                     loading.start(id)
                 end,

@@ -47,9 +47,16 @@ M.parse_buffer = function()
         elseif value["version"] then
             version = clean_version(value["version"])
         end
+
+        local group
+        if dev_dependencies[name] then
+            group = "dev"
+        end
+
         if name ~= "python" and version then
             installed_dependencies[string.lower(name)] = {
                 current = version,
+                group = group,
             }
         end
     end
